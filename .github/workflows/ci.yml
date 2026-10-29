@@ -1,0 +1,16 @@
+name: Validate semantic analyzer
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Run analyzer tests
+        run: dotnet test tests/VSlices.SemanticProject.Analyzers.Tests/VSlices.SemanticProject.Analyzers.Tests.csproj --configuration Release
+      - name: Package analyzer
+        run: dotnet pack src/VSlices.SemanticProject.Analyzers/VSlices.SemanticProject.Analyzers.csproj --configuration Release --output artifacts
