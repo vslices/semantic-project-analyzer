@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <CompilerVisibleProperty Include="SemanticProjectRootNamespace" />
+    <CompilerVisibleProperty Include="SemanticProjectDomainDependencies" />
+  </ItemGroup>
+</Project>
