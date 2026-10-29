@@ -30,7 +30,7 @@ public sealed class BoundaryTests
             .Replace("State s;", "Example.Tickets.Spaces.State s;");
         var ids = await Diagnose(source);
         Assert.Equal(expected is null ? Array.Empty<string>() : new[] { expected },
-            ids.Distinct().OrderBy(s => s));
+            ids.Distinct().OrderBy(s => s).ToArray());
     }
 
     [Fact]
@@ -55,7 +55,7 @@ public sealed class BoundaryTests
     {
         var tree = CSharpSyntaxTree.ParseText(source);
         var refs = new[] { typeof(object).Assembly.Location, typeof(Enumerable).Assembly.Location }
-            .Distinct().Select(MetadataReference.CreateFromFile);
+            .Distinct().Select(path => MetadataReference.CreateFromFile(path));
         var compilation = CSharpCompilation.Create("BoundaryFixture", new[] { tree }, refs,
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
         var global = new Dictionary<string, string>();
